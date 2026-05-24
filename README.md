@@ -92,6 +92,7 @@ erDiagram
 
 # Laravel 10.x を指定してプロジェクトを作成
 
+```
 docker run --rm \
  -u "$(id -u):$(id -g)" \
  -v "$(pwd):/var/www/html" \
@@ -99,16 +100,20 @@ docker run --rm \
  -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
  laravelsail/php82-composer:latest \
  composer create-project laravel/laravel:^10.0 contact-form-app
+```
 
 2. Laravel Sailのインストール
    プロジェクト作成後、contact-form-app ディレクトリに移動し、Laravel Sailをインストールします。
 
     # プロジェクトディレクトリに移動
 
+    ```
     cd contact-form-app
+    ```
 
     # Laravel Sailをインストール
 
+    ```
     docker run --rm \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/var/www/html" \
@@ -116,9 +121,11 @@ docker run --rm \
      -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
      laravelsail/php82-composer:latest \
      composer require laravel/sail --dev
+    ```
 
     # Sailの設定ファイルをパブリッシュ（MySQLを選択）
 
+    ```
     docker run --rm \
      -u "$(id -u):$(id -g)" \
      -v "$(pwd):/var/www/html" \
@@ -126,6 +133,7 @@ docker run --rm \
      -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
      laravelsail/php82-composer:latest \
      php artisan sail:install --with=mysql
+    ```
 
     # ※M1/M2/M3 Mac（Apple Silicon）をお使いの方
 
@@ -136,20 +144,24 @@ docker run --rm \
     ```
 
     解決方法: `compose.yaml`を開き、mysqlサービスに`platform: 'linux/amd64'`を追加してください。
+
+    ```
     mysql:
     image: 'mysql/mysql-server:8.0'
     platform: 'linux/amd64' # ← この行を追加
     ports:
+    ```
 
 3. .env ファイルの設定
    .env ファイルを開き、データベース接続情報が以下と一致していることを確認します。
-
+    ```
     DB_CONNECTION=mysql
     DB_HOST=mysql
     DB_PORT=3306
     DB_DATABASE=laravel
     DB_USERNAME=sail
     DB_PASSWORD=password
+    ```
 
 重要: DB_HOST は localhost や 127.0.0.1 ではなく、Dockerコンテナ名である mysql を指定します。
 
@@ -162,10 +174,15 @@ docker run --rm \
     > sail npm install
 
     ②Tailwind CSSのインストール
+
+    ```
     sail npm install -D tailwindcss@^3.4.0 postcss autoprefixer
     sail npm install alpinejs
+    ```
 
     ③設定ファイルの生成
+
+    ```
     sail npx tailwindcss init -p
     ④Tailwind CSSのテンプレートパス設定
     tailwind.config.js を開き、以下のように設定します。
@@ -181,10 +198,14 @@ docker run --rm \
     },
     plugins: [],
     }
+    ```
 
     ➄提供リポジトリのresourcesディレクトリと入れ替え
     以下のリポジトリをクローンし、resourcesディレクトリを丸ごと入れ替えます。
+
+    ```
     git clone https://github.com/coachtech-prepared-file/Preparedblade-ConfirmationTest-ContactForm.git
+    ```
 
     入れ替え手順:
     a.Finderでプロジェクトフォルダを開きます。
@@ -195,7 +216,11 @@ docker run --rm \
     ※コマンド操作に慣れている場合は rm -rf と cp -r でも可能ですが、誤削除を防ぐためFinderでの操作を推奨します。
 
     ⑥Vite開発サーバーの起動
+
+    ```
     sail npm run dev
+    ```
+
     注意: sail npm run dev は実行したままにしておく必要があります。
 
 5. phpMyAdminの追加
@@ -220,11 +245,15 @@ compose.yaml に追加する内容:
 
 # Sailをバックグラウンドで起動
 
+```
 ./vendor/bin/sail up -d
+```
 
 # エイリアスを設定して 'sail' だけでコマンドを実行できるようにする
 
+```
 echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.zshrc
+```
 
 # または bash の場合
 
@@ -236,15 +265,31 @@ exec $SHELL
 
 7. アプリケーションキーの生成
    ルートで以下のコマンドを実行する
-   sail artisan key:generate
+
+    ```
+    sail artisan key:generate
+    ```
 
 8. データベースのマイグレーションと初期データ投入
    以下のコマンドでテーブルを作成し、初期データを投入します。
-   sail artisan migrate --seed
+    ```
+    sail artisan migrate --seed
+    ```
 
 ※既存のデータベースをリセットしたい場合は以下を実行してください。
+
+```
 sail artisan migrate:fresh --seed
+```
 
 ## 作成者
 
-大江 輝
+oe akira
+
+```
+
+```
+
+```
+
+```
