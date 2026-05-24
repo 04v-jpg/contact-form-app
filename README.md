@@ -88,19 +88,18 @@ erDiagram
 1. Laravelプロジェクトの作成 (Laravel 10.x)
    注意: curl -s "https://laravel.build/..." は最新版のLaravelをインストールするため、今回は使用しません。
 
-以下のDockerコマンドを実行して、Laravel 10.xを明示的に指定してプロジェクトを作成します。
+    以下のDockerコマンドを実行して、Laravel 10.xを明示的に指定してプロジェクトを作成します。
+    Laravel 10.x を指定してプロジェクトを作成
 
-Laravel 10.x を指定してプロジェクトを作成
-
-```
-docker run --rm \
- -u "$(id -u):$(id -g)" \
- -v "$(pwd):/var/www/html" \
- -w /var/www/html \
- -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
- laravelsail/php82-composer:latest \
- composer create-project laravel/laravel:^10.0 contact-form-app
-```
+    ```
+    docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
+    laravelsail/php82-composer:latest \
+    composer create-project laravel/laravel:^10.0 contact-form-app
+    ```
 
 2. Laravel Sailのインストール
    プロジェクト作成後、contact-form-app ディレクトリに移動し、Laravel Sailをインストールします。
@@ -154,6 +153,7 @@ docker run --rm \
 
 3. .env ファイルの設定
    .env ファイルを開き、データベース接続情報が以下と一致していることを確認します。
+
     ```
     DB_CONNECTION=mysql
     DB_HOST=mysql
@@ -163,7 +163,7 @@ docker run --rm \
     DB_PASSWORD=password
     ```
 
-重要: DB_HOST は localhost や 127.0.0.1 ではなく、Dockerコンテナ名である mysql を指定します。
+    重要: DB_HOST は localhost や 127.0.0.1 ではなく、Dockerコンテナ名である mysql を指定します。
 
 4. フロントエンドのセットアップ (Vite & Tailwind CSS)
    本プロジェクトでは、フロントエンドのスタイリングにTailwind CSSを使用します。
@@ -226,46 +226,43 @@ docker run --rm \
 5. phpMyAdminの追加
    compose.yaml を開き、mysql サービスの後に以下の設定を追加してください。
 
-compose.yaml に追加する内容:
+    compose.yaml に追加する内容:
 
     phpmyadmin:
-        image: 'phpmyadmin:latest'
-        ports:
-            - '${FORWARD_PHPMYADMIN_PORT:-8080}:80'
+    image: 'phpmyadmin:latest'
+    ports: - '${FORWARD_PHPMYADMIN_PORT:-8080}:80'
         environment:
             PMA_HOST: mysql
             PMA_USER: '${DB_USERNAME}'
-            PMA_PASSWORD: '${DB_PASSWORD}'
-        networks:
-            - sail
-        depends_on:
-            - mysql
+    PMA_PASSWORD: '${DB_PASSWORD}'
+    networks: - sail
+    depends_on: - mysql
 
 6. Sailの起動とエイリアス設定
 
-Sailをバックグラウンドで起動
+    Sailをバックグラウンドで起動
 
-```
-./vendor/bin/sail up -d
-```
+    ```
+    ./vendor/bin/sail up -d
+    ```
 
-エイリアスを設定して 'sail' だけでコマンドを実行できるようにする
+    エイリアスを設定して 'sail' だけでコマンドを実行できるようにする
 
-```
-echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.zshrc
-```
+    ```
+    echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.zshrc
+    ```
 
-または bash の場合
+    または bash の場合
 
-```
-echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.bashrc
-```
+    ```
+    echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.bashrc
+    ```
 
-シェルを再起動するか、新しいターミナルを開いてエイリアスを有効にする
+    シェルを再起動するか、新しいターミナルを開いてエイリアスを有効にする
 
-```
-exec $SHELL
-```
+    ```
+    exec $SHELL
+    ```
 
 7. アプリケーションキーの生成
    ルートで以下のコマンドを実行する
