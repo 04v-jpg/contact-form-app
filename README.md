@@ -90,7 +90,7 @@ erDiagram
 
 以下のDockerコマンドを実行して、Laravel 10.xを明示的に指定してプロジェクトを作成します。
 
-# Laravel 10.x を指定してプロジェクトを作成
+Laravel 10.x を指定してプロジェクトを作成
 
 ```
 docker run --rm \
@@ -105,13 +105,13 @@ docker run --rm \
 2. Laravel Sailのインストール
    プロジェクト作成後、contact-form-app ディレクトリに移動し、Laravel Sailをインストールします。
 
-    # プロジェクトディレクトリに移動
+    プロジェクトディレクトリに移動
 
     ```
     cd contact-form-app
     ```
 
-    # Laravel Sailをインストール
+    Laravel Sailをインストール
 
     ```
     docker run --rm \
@@ -123,7 +123,7 @@ docker run --rm \
      composer require laravel/sail --dev
     ```
 
-    # Sailの設定ファイルをパブリッシュ（MySQLを選択）
+    Sailの設定ファイルをパブリッシュ（MySQLを選択）
 
     ```
     docker run --rm \
@@ -135,7 +135,7 @@ docker run --rm \
      php artisan sail:install --with=mysql
     ```
 
-    # ※M1/M2/M3 Mac（Apple Silicon）をお使いの方
+    ※M1/M2/M3 Mac（Apple Silicon）をお使いの方
 
     Apple Silicon搭載のMacでは、`sail up -d`実行時に以下のエラーが発生することがあります：
 
@@ -243,25 +243,29 @@ compose.yaml に追加する内容:
 
 6. Sailの起動とエイリアス設定
 
-# Sailをバックグラウンドで起動
+Sailをバックグラウンドで起動
 
 ```
 ./vendor/bin/sail up -d
 ```
 
-# エイリアスを設定して 'sail' だけでコマンドを実行できるようにする
+エイリアスを設定して 'sail' だけでコマンドを実行できるようにする
 
 ```
 echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.zshrc
 ```
 
-# または bash の場合
+または bash の場合
 
-# echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.bashrc
+```
+echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.bashrc
+```
 
-# シェルを再起動するか、新しいターミナルを開いてエイリアスを有効にする
+シェルを再起動するか、新しいターミナルを開いてエイリアスを有効にする
 
+```
 exec $SHELL
+```
 
 7. アプリケーションキーの生成
    ルートで以下のコマンドを実行する
@@ -285,11 +289,3 @@ sail artisan migrate:fresh --seed
 ## 作成者
 
 oe akira
-
-```
-
-```
-
-```
-
-```
